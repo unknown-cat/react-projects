@@ -28,7 +28,7 @@ function App() {
     <main>
       {loading
         ? <Loading />
-        : <Tours />
+        : <Tours tours={tours}/>
       }
     </main>
   )
