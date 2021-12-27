@@ -35,6 +35,13 @@ function App() {
         ? <Loading />
         : <Tours tours={tours} removeTour={removeTour} />
       }
+      {tours.length === 0
+        ? <div className="title">
+          <h2>no tours left</h2>
+          <button onClick={fetchTours} className='btn'>refresh</button>
+        </div> 
+        : null
+      }
     </main>
   )
 }
