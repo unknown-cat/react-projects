@@ -4,7 +4,13 @@ import { FaChevronLeft, FaChevronRight, FaQuoteRight } from 'react-icons/fa';
 import data from './data';
 function App() {
   const [people, setPeople] = useState(data)
-  const [index, setIndex] = useState(2)
+  const [index, setIndex] = useState(0)
+  useEffect(() => {
+    const lastIndex = people.length - 1
+    if(index < 0) setIndex(lastIndex)
+    if (index > lastIndex) setIndex(0)
+  }, [index, people])
+  
   return (
     <section className='section'>
       <div className='title'>
@@ -28,8 +34,8 @@ function App() {
             </article>
           )
         })}
-        <button className='next'><FaChevronRight /></button>
-        <button className='prev'><FaChevronLeft /></button>
+        <button className='next' onClick={() => setIndex(index + 1)}><FaChevronRight /></button>
+        <button className='prev' onClick={() => setIndex(index - 1)}><FaChevronLeft /></button>
       </div>
     </section>
   )
