@@ -5,11 +5,21 @@ import Alert from './Alert'
 function App() {
   const [name, setName] = useState('')
   const [list, setList] = useState([])
-  const [isEditing, setEditing] = useState(true)
+  const [isEditing, setIsEditing] = useState(false)
   const [alert, setAlert] = useState({ show: false, msg: '', type: '' })
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('submit');
+    if (!name) {
+      // display alert
+    } else if (name && isEditing) {
+      // deal with edit
+    } else {
+      // show Alert
+      const newItem = { id: new Date().getTime().toString(), title: name };
+      setList([...list, newItem]);
+      setName('');
+    }
   }
   return (
     <section className='section-center'>
@@ -22,14 +32,15 @@ function App() {
             className='grocery'
             placeholder='e. g. eggs'
             value={name}
-            onChange={(e) => setName(e.target.value)} />
+            onChange={(e) => setName(e.target.value)} 
+            />
           <button type='submit' className='submit-btn'>
             {isEditing ? 'edit' : 'submit'}
           </button>
         </div>
       </form>
       <div className="grocery-container">
-        <List />
+        <List items={list} />
         <button className="clear-btn">clear items</button>
       </div>
     </section>
