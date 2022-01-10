@@ -6,25 +6,36 @@ function App() {
   const [name, setName] = useState('')
   const [list, setList] = useState([])
   const [isEditing, setIsEditing] = useState(false)
-  const [alert, setAlert] = useState({ show: false, msg: '', type: '' })
+  const [alert, setAlert] = useState({
+    show: false,
+    msg: '',
+    type: '',
+  })
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('submit');
     if (!name) {
-      // display alert
+      showAlert(true, 'danger', 'please enter the value')
     } else if (name && isEditing) {
       // deal with edit
     } else {
       // show Alert
-      const newItem = { id: new Date().getTime().toString(), title: name };
+      const newItem = {
+        id: new Date().getTime().toString(),
+        title: name,
+      };
       setList([...list, newItem]);
       setName('');
     }
   }
+
+  const showAlert = (show=false, type='', msg='') => {
+    return setAlert({show, type, msg})
+  }
+
   return (
     <section className='section-center'>
       <form className='grocery-form' onSubmit={handleSubmit}>
-        {alert.show && <Alert />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
         <h3>grocery bud</h3>
         <div className="form-control">
           <input
@@ -33,7 +44,7 @@ function App() {
             placeholder='e. g. eggs'
             value={name}
             onChange={(e) => setName(e.target.value)}
-            />
+          />
           <button type='submit' className='submit-btn'>
             {isEditing ? 'edit' : 'submit'}
           </button>
