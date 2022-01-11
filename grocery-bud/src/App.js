@@ -6,6 +6,7 @@ function App() {
   const [name, setName] = useState('')
   const [list, setList] = useState([])
   const [isEditing, setIsEditing] = useState(false)
+  const [editID, setEditID] = useState(null)
   const [alert, setAlert] = useState({
     show: false,
     msg: '',
@@ -39,11 +40,16 @@ function App() {
     showAlert(true, 'danger', 'item removed');
     setList(list.filter((item) => item.id !== id));
   }
+  const editItem = (id) => {
+    showAlert(true, 'success', 'item edited');
+    setList(list.filter((item) => item.id !== id));
+    setEditID(name)
+  }
 
   return (
     <section className='section-center'>
       <form className='grocery-form' onSubmit={handleSubmit}>
-        {alert.show && <Alert {...alert} removeAlert={showAlert} />}
+        {alert.show && <Alert {...alert} removeAlert={showAlert} list={list}/>}
         <h3>grocery bud</h3>
         <div className="form-control">
           <input
@@ -60,7 +66,7 @@ function App() {
       </form>
       {list.length > 0 && (
         <div className="grocery-container">
-          <List items={list} removeItem={removeItem} />
+          <List items={list} removeItem={removeItem} editItem={editItem} />
           <button className="clear-btn" onClick={clearList}>clear items</button>
         </div>
       )}
