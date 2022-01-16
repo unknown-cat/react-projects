@@ -34,7 +34,7 @@ const Sidebar = () => {
         {social.map(link => {
           const { url, id, icon } = link
           return (
-            <li id={id}>
+            <li key={id}>
               <a href={url}>{icon}</a>
             </li>
           )
