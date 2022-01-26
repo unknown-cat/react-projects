@@ -37,7 +37,9 @@ const AppProvider = ({ children }) => {
     const cart = await res.json()
     dispatch({type: 'DISPLAY_ITEMS', payload: cart})
   }
-
+  const toggleAmount = (id, type) => {
+    dispatch({type: 'TOGGLE_AMOUNT', payload: {id, type}})
+  }
   useEffect(() => {
     fetchData()
   }, [])
@@ -52,7 +54,8 @@ const AppProvider = ({ children }) => {
         clearCart,
         remove,
         increaseAmount,
-        decreaseAmount
+        decreaseAmount,
+        toggleAmount
       }}
     >
       {children}
