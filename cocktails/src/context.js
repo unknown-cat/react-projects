@@ -8,6 +8,29 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('a')
   const [cocktails, setCocktails] = useState([])
+
+  const fetchDrinks = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`${url}${searchTerm}`)
+      const data = await res.json()
+      const { drinks } = data
+      if (drinks) {
+      
+      } else {
+        setCocktails([])
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log(error);
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchDrinks()
+  }, [searchTerm])
+
   return <AppContext.Provider
     value={{
       loading,
